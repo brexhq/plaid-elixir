@@ -195,11 +195,9 @@ defmodule Plaid.Utils do
   end
 
   def map_response(response, :link) do
-    Poison.Decode.transform(
+    Poison.Decode.decode(
       response,
-      %{
-        as: %Plaid.Link{}
-      }
+      as: %Plaid.Link{}
     )
   end
 end
