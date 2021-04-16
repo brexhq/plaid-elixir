@@ -25,7 +25,7 @@ defmodule Plaid.Item do
           item_id: String.t(),
           webhook: String.t(),
           request_id: String.t(),
-          status: map | nil,
+          status: map | nil
         }
   @type params :: %{required(atom) => String.t()}
   @type config :: %{required(atom) => String.t()}
@@ -84,6 +84,7 @@ defmodule Plaid.Item do
   {:ok, %{public_token: "access-env-identifier", expiration: 3600, request_id: "kg414f"}}
   ```
   """
+  @deprecated "Plaid no longer uses public tokens, create a Link token instead."
   @spec create_public_token(params, config | nil) :: {:ok, map} | {:error, Plaid.Error.t()}
   def create_public_token(params, config \\ %{}) do
     config = validate_cred(config)
