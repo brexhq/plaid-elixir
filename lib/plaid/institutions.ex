@@ -3,7 +3,7 @@ defmodule Plaid.Institutions do
   Functions for Plaid `institutions` endpoint.
   """
 
-  import Plaid, only: [make_request_with_cred: 4, validate_cred: 1, validate_public_key: 1]
+  import Plaid, only: [make_request_with_cred: 4, validate_cred: 1]
 
   alias Plaid.Utils
 
@@ -124,7 +124,7 @@ defmodule Plaid.Institutions do
   @spec get_by_id(String.t(), config | nil) ::
           {:ok, Plaid.Institutions.Institution.t()} | {:error, Plaid.Error.t()}
   def get_by_id(id, config \\ %{}) do
-    config = validate_public_key(config)
+    config = validate_cred(config)
     params = %{institution_id: id}
     endpoint = "#{@endpoint}/get_by_id"
 
@@ -142,7 +142,7 @@ defmodule Plaid.Institutions do
   """
   @spec search(params, config | nil) :: {:ok, Plaid.Institutions.t()} | {:error, Plaid.Error.t()}
   def search(params, config \\ %{}) do
-    config = validate_public_key(config)
+    config = validate_cred(config)
     endpoint = "#{@endpoint}/search"
 
     make_request_with_cred(:post, endpoint, config, params)
