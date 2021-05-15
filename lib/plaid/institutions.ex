@@ -119,13 +119,17 @@ defmodule Plaid.Institutions do
   end
 
   @doc """
-  Gets an institution by id.
+  Parameters
+  ```
+  "ins_109512"
+  OR
+  %{institution_id: "ins_109512", options: %{include_optional_metadata: true, include_status: false}}
   """
-  @spec get_by_id(String.t(), config | nil) ::
+  @spec get_by_id(String.t() | params, config | nil) ::
           {:ok, Plaid.Institutions.Institution.t()} | {:error, Plaid.Error.t()}
-  def get_by_id(id, config \\ %{}) do
+  def get_by_id(params, config \\ %{}) do
     config = validate_cred(config)
-    params = %{institution_id: id}
+    params = if is_binary(params), do: %{institution_id: params}, else: params
     endpoint = "#{@endpoint}/get_by_id"
 
     make_request_with_cred(:post, endpoint, config, params)
